@@ -1,5 +1,4 @@
-FROM node:8.12-alpine
-
+FROM node:alpine
 ENV REVEAL_VERSION 3.7.0
 ENV WORKSHOP_NAME=default
 

@@ -1,6 +1,7 @@
 action: "notta"
 instructor_list: 
   - patricksimonian
+  - stewartshea
 environments: 
   - tools
   - dev
