@@ -1,6 +1,8 @@
-FROM node:slim
+FROM node:current-alpine
 ENV REVEAL_VERSION 3.7.0
 ENV WORKSHOP_NAME=default
+
+RUN npm config set unsafe-perm true
 
 # python, make and g++ are build dependencies fpr reveal.js and grunt-cli
 RUN apk add --no-cache --virtual .build-deps python make g++ wget gzip \
