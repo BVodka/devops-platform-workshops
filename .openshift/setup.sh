@@ -21,12 +21,12 @@ WORKBENCH_BUILD_TEMPLATE_PATH="${TEMPLATES_DIR}/workbench-build.json"
 WORKBENCH_DEPLOYMENT_TEMPLATE_PATH="${TEMPLATES_DIR}/workbench-deployment.json"
 
 if ! oc whoami >/dev/null ; then
-  echo -e "Sorry. You are not logged in!\nPlease visit https://console.pathfinder.gov.bc.ca:8443/console/ and use the provided login command."
+  echo -e "Sorry. You are not logged in!\nPlease visit ${CLUSTER_URL} and use the provided login command."
   exit 1
 fi
 
 oc_host="$(oc config current-context | cut -d'/' -f2)"
-if [ ${oc_host} != "console-pathfinder-gov-bc-ca:8443" ]; then
+if [ ${oc_host} != ${CLUSTER_API_KUBECONTEXT} ]; then
   echo "You are not logged in the right cluster"
   #exit 1
 fi

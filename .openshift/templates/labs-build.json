@@ -2,14 +2,14 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "workbench"
+    "name": "ocp101-labs"
   },
   "objects": [
     {
       "kind": "ImageStream",
       "apiVersion": "image.openshift.io/v1",
       "metadata": {
-        "name": "fedora-minimal",
+        "name": "gitbook-base",
         "creationTimestamp": null,
         "labels": {},
         "annotations": {}
@@ -20,18 +20,18 @@
         },
         "tags": [
           {
-            "name": "30",
+            "name": "3.2.3",
             "annotations": {
-              "openshift.io/imported-from": "registry.fedoraproject.org/fedora-minimal:30"
+              "openshift.io/imported-from": "arctiqteam/gitbook-base:3.2.3"
             },
             "from": {
               "kind": "DockerImage",
-              "name": "registry.fedoraproject.org/fedora-minimal:30"
+              "name": "arctiqteam/gitbook-base:3.2.3"
             },
             "generation": null,
             "importPolicy": {},
             "referencePolicy": {
-              "type": ""
+              "type": "Local"
             }
           }
         ]
@@ -44,7 +44,7 @@
       "kind": "ImageStream",
       "apiVersion": "image.openshift.io/v1",
       "metadata": {
-        "name": "workbench",
+        "name": "ocp101-labs",
         "creationTimestamp": null,
         "labels": {},
         "annotations": {}
@@ -62,7 +62,7 @@
       "kind": "BuildConfig",
       "apiVersion": "build.openshift.io/v1",
       "metadata": {
-        "name": "workbench",
+        "name": "ocp101-labs",
         "creationTimestamp": null,
         "labels": {},
         "annotations": {}
@@ -75,14 +75,14 @@
             "uri": "https://www.github.com/BCDevOps/devops-platform-workshops.git",
             "ref": "101-test-ocp4"
           },
-          "contextDir": ".openshift/images/workbench"
+          "contextDir": "workshop-labs"
         },
         "strategy": {
           "type": "Docker",
           "dockerStrategy": {
             "from": {
               "kind": "ImageStreamTag",
-              "name": "fedora-minimal:30"
+              "name": "gitbook-base:3.2.3"
             },
             "imageOptimizationPolicy": "SkipLayers"
           }
@@ -90,17 +90,17 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "workbench:latest"
+            "name": "ocp101-labs:latest"
           }
         },
         "resources": {
           "requests": {
-            "cpu": "0",
-            "memory": "0"
+            "cpu": "1",
+            "memory": "1Gi"
           },
           "limits": {
-            "cpu": "0",
-            "memory": "0"
+            "cpu": "2",
+            "memory": "2Gi"
           }
         },
         "postCommit": {},
@@ -109,48 +109,9 @@
       "status": {
         "lastVersion": 0
       }
-    },
-    {
-      "apiVersion": "image.openshift.io/v1",
-      "kind": "ImageStream",
-      "metadata": {
-        "annotations": null,
-        "creationTimestamp": null,
-        "generation": 1,
-        "labels": {
-          "app": "workbench",
-          "template": "workbench"
-        },
-        "name": "fedora-minimal"
-      },
-      "spec": {
-        "lookupPolicy": {
-          "local": false
-        },
-        "tags": [
-          {
-            "annotations": {
-              "openshift.io/imported-from": "registry.fedoraproject.org/fedora-minimal:30"
-            },
-            "from": {
-              "kind": "DockerImage",
-              "name": "registry.fedoraproject.org/fedora-minimal:30"
-            },
-            "generation": 1,
-            "importPolicy": {},
-            "name": "30",
-            "referencePolicy": {
-              "type": "Local"
-            }
-          }
-        ]
-      },
-      "status": {
-        "dockerImageRepository": ""
-      }
     }
   ],
   "labels": {
-    "template": "workbench"
+    "template": "ocp101-labs"
   }
 }

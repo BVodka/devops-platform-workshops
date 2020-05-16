@@ -1,0 +1,97 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "workbench"
+  },
+  "objects": [
+    {
+      "kind": "StatefulSet",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "name": "${NAME}${SUFFIX}",
+        "creationTimestamp": null,
+        "labels": {
+          "app": "ocp101-workbench"
+        },
+        "annotations": {}
+      },
+      "spec": {
+        "strategy": {
+          "resources": {}
+        },
+        "replicas": 1,
+        "test": false,
+        "selector": {
+          "matchLabels": {
+            "statefulset": "${NAME}${SUFFIX}"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "statefulset": "${NAME}${SUFFIX}"
+            },
+            "annotations": {
+              "openshift.io/generated-by": "OpenShiftNewApp"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "app",
+                "image": "docker-registry.default.svc:5000/ocp101b-workbench/workbench:latest",
+                "resources": {
+                  "requests": {
+                    "cpu": "200m",
+                    "memory": "128Mi"
+                  },
+                  "limits": {
+                    "memory": "256Mi",
+                    "cpu": "500m"
+                  }
+                },
+                "imagePullPolicy": "Always"
+              }
+            ],
+            "automountServiceAccountToken": true,
+            "serviceAccountName": "student"
+          }
+        },
+        "updateStrategy": {
+          "type": "RollingUpdate"
+        }
+      },
+      "status": {
+        "latestVersion": 0,
+        "observedGeneration": 0,
+        "replicas": 0,
+        "updatedReplicas": 0,
+        "availableReplicas": 0,
+        "unavailableReplicas": 0
+      }
+    }
+  ],
+  "labels": {
+    "template": "workbench"
+  },
+  "parameters": [
+    {
+      "name": "NAME",
+      "required": true
+    },
+    {
+      "name": "SUFFIX",
+      "required": false
+    },
+    {
+      "name": "IMAGE_NAMESPACE",
+      "required": true
+    },
+    {
+      "name": "IMAGE_NAME",
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "ocp101-labs"
+  },
+  "objects": [
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "apps.openshift.io/v1",
+      "metadata": {
+        "name": "${NAME}${SUFFIX}",
+        "creationTimestamp": null,
+        "labels": {
+          "app": "ocp101-labs"
+        },
+        "annotations": {}
+      },
+      "spec": {
+        "strategy": {
+          "resources": {}
+        },
+        "triggers": [
+          {
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "app"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "namespace": "${IMAGE_NAMESPACE}",
+                "name": "${IMAGE_NAME}"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+          "deploymentconfig": "${NAME}${SUFFIX}"
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "deploymentconfig": "${NAME}${SUFFIX}"
+            },
+            "annotations": {
+              "openshift.io/generated-by": "OpenShiftNewApp"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "app",
+                "image": " ",
+                "resources": {
+                  "requests": {
+                    "cpu": "10m",
+                    "memory": "40Mi"
+                  },
+                  "limits": {
+                    "memory": "60Mi",
+                    "cpu": "50m"
+                  }
+                },
+                "imagePullPolicy": "Always",
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/",
+                    "port": 4000,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 15,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+                }
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "latestVersion": 0,
+        "observedGeneration": 0,
+        "replicas": 0,
+        "updatedReplicas": 0,
+        "availableReplicas": 0,
+        "unavailableReplicas": 0
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "route.openshift.io/v1",
+      "metadata": {
+        "name": "${NAME}${SUFFIX}",
+        "creationTimestamp": null,
+        "labels": {
+          "app": "ocp101-labs"
+        }
+      },
+      "spec": {
+        "host": "${HOST}",
+        "to": {
+          "kind": "Service",
+          "name": "${NAME}${SUFFIX}",
+          "weight": 100
+        },
+        "port": {
+          "targetPort": "4000-tcp"
+        },
+        "tls": {
+          "insecureEdgeTerminationPolicy": "Redirect",
+          "termination": "edge"
+        }
+      },
+      "status": {
+        "ingress": null
+      }
+    }
+  ],
+  "labels": {
+    "template": "ocp101-labs"
+  },
+  "parameters": [
+    {
+      "name": "NAME",
+      "required": true
+    },
+    {
+      "name": "HOST",
+      "required": true
+    },
+    {
+      "name": "SUFFIX",
+      "required": false
+    },
+    {
+      "name": "IMAGE_NAMESPACE",
+      "required": true
+    },
+    {
+      "name": "IMAGE_NAME",
+      "required": true
+    }
+  ]
+}

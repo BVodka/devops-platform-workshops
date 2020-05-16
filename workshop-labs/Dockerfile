@@ -7,6 +7,7 @@ COPY bin/ ${APP_ROOT}/bin/
 COPY support/ ${APP_ROOT}/support/
 # where caddyfile is mounted
 RUN mkdir ${APP_ROOT}/config
+COPY config/ ${APP_ROOT}/config
 RUN rm -rf  ${APP_ROOT}/docs/*
 
 COPY docs/ ${APP_ROOT}/docs/
