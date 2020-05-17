@@ -72,7 +72,7 @@
         "source": {
           "type": "Git",
           "git": {
-            "uri": "https://www.github.com/BCDevOps/devops-platform-workshops.git",
+            "uri": "https://github.com/BCDevOps/devops-platform-workshops.git",
             "ref": "101-test-ocp4"
           },
           "contextDir": "workshop-labs"

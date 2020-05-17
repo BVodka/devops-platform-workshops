@@ -12,7 +12,8 @@ function create_workbench_build_template {
   popd > /dev/null
 
   convert_list_to_template "${TEMPLATE_PATH}" "workbench"
-
+   
+  
   # Ading Fedora ImageStream
   _jq 'del(.objects[] | select(.kind == "ImageStream" and .name == "fedora-minimal"))' "${TEMPLATE_PATH}"
   _jq 'del(.objects[] | select(.kind == "ImageStreamTag"))' "${TEMPLATE_PATH}"

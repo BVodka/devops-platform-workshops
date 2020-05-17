@@ -6,59 +6,6 @@
   },
   "objects": [
     {
-      "kind": "ImageStream",
-      "apiVersion": "image.openshift.io/v1",
-      "metadata": {
-        "name": "fedora-minimal",
-        "creationTimestamp": null,
-        "labels": {},
-        "annotations": {}
-      },
-      "spec": {
-        "lookupPolicy": {
-          "local": false
-        },
-        "tags": [
-          {
-            "name": "30",
-            "annotations": {
-              "openshift.io/imported-from": "registry.fedoraproject.org/fedora-minimal:30"
-            },
-            "from": {
-              "kind": "DockerImage",
-              "name": "registry.fedoraproject.org/fedora-minimal:30"
-            },
-            "generation": null,
-            "importPolicy": {},
-            "referencePolicy": {
-              "type": ""
-            }
-          }
-        ]
-      },
-      "status": {
-        "dockerImageRepository": ""
-      }
-    },
-    {
-      "kind": "ImageStream",
-      "apiVersion": "image.openshift.io/v1",
-      "metadata": {
-        "name": "workbench",
-        "creationTimestamp": null,
-        "labels": {},
-        "annotations": {}
-      },
-      "spec": {
-        "lookupPolicy": {
-          "local": false
-        }
-      },
-      "status": {
-        "dockerImageRepository": ""
-      }
-    },
-    {
       "kind": "BuildConfig",
       "apiVersion": "build.openshift.io/v1",
       "metadata": {
@@ -72,7 +19,7 @@
         "source": {
           "type": "Git",
           "git": {
-            "uri": "https://www.github.com/BCDevOps/devops-platform-workshops.git",
+            "uri": "https://github.com/BCDevOps/devops-platform-workshops.git",
             "ref": "101-test-ocp4"
           },
           "contextDir": ".openshift/images/workbench"
